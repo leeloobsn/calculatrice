@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Ma calculatrice</title>
+    <style>
+      td {
+        border-color: darkgrey;
+        border-width: 1px;
+        border-style: solid;
+        background-color: rgb(238, 238, 238);
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 22px;
+      }
+
+      button {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+      }
+
+      td.operateur {
+        background-color: #FF9800;
+        color: white;
+      }
+
+      #resultat {
+        color: white;
+        font-size: 40px;
+        text-align: right;
+        background-color: darkgrey;
+        padding-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calculatrice</h1>
+
+    <table cellspacing="0">
+      <tr>
+        <td colspan="4" id="resultat">0</td>
+      </tr>
+      <tr>
+        <td><button class="remise_a_zero">AC</button></td>
+        <td><button class="bouton_normal">(</button></td>
+        <td><button class="bouton_normal">)</button></td>
+        <td class="operateur"><button class="bouton_normal">/</button></td>
+      </tr>
+      <tr>
+        <td><button class="bouton_normal">7</button></td>
+        <td><button class="bouton_normal">8</button></td>
+        <td><button class="bouton_normal">9</button></td>
+        <td class="operateur"><button class="bouton_normal">*</button></td>
+      </tr>
+      <tr>
+        <td><button class="bouton_normal">4</button></td>
+        <td><button class="bouton_normal">5</button></td>
+        <td><button class="bouton_normal">6</button></td>
+        <td class="operateur"><button class="bouton_normal">-</button></td>
+      </tr>
+      <tr>
+        <td><button class="bouton_normal">1</button></td>
+        <td><button class="bouton_normal">2</button></td>
+        <td><button class="bouton_normal">3</button></td>
+        <td class="operateur"><button class="bouton_normal">+</button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button class="bouton_normal">0</button></td>
+        <td><button class="bouton_normal">.</button></td>
+        <td class="operateur"><button class="calcul">=</button></td>
+      </tr>
+    </table>
+    <script>
+      function click_sur_une_touche(evenement) {
+        var bouton_clique = evenement.target;
+        var texte_du_bouton = bouton_clique.innerHTML;
+        var resultat = document.querySelector('#resultat');
+
+        if (resultat.innerHTML == "0") {
+          resultat.innerHTML = texte_du_bouton;
+        } else {
+          resultat.innerHTML = resultat.innerHTML + texte_du_bouton;
+        }
+      }
+
+      function remise_a_zero(evenement) {
+        var resultat = document.querySelector('#resultat');
+        resultat.innerHTML = "0";
+      }
+
+      function calcul_du_resultat() {
+        var resultat = document.querySelector('#resultat');
+        var resultat_du_calcul = eval(resultat.innerHTML);
+        resultat.innerHTML = resultat_du_calcul;
+      }
+
+      var boutons = document.querySelectorAll('button.bouton_normal');
+      for (var i = 0; i < boutons.length; i = i + 1) {
+        var bouton_courant = boutons[i];
+        bouton_courant.addEventListener('click', click_sur_une_touche)
+      }
+
+      var boutons_remise_a_zero = document.querySelectorAll('.remise_a_zero');
+      for (var i = 0; i < boutons_remise_a_zero.length; i = i + 1) {
+        var bouton_remise_a_zero_courant = boutons_remise_a_zero[i];
+        bouton_remise_a_zero_courant.addEventListener('click', remise_a_zero);
+      }
+
+      var boutons_calcul = document.querySelectorAll('.calcul');
+      for (var i = 0; i < boutons_calcul.length; i = i + 1) {
+        var bouton_calcul_courant = boutons_calcul[i];
+        bouton_calcul_courant.addEventListener('click', calcul_du_resultat);
+      }
+    </script>
+  </body>
+</html>
